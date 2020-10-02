@@ -1,67 +1,36 @@
 import React, { useEffect } from 'react'
-import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import fetchAlerts from '../../modules/alerts/fetchAlerts'
 import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync,
-} from '../../modules/counter'
-import { getAlerts } from '../../modules/alerts/actions'
+  getAlerts,
+  getAlertsError,
+  getAlertsPending,
+} from '../../modules/alerts/reducer'
 
 const Alert = (props) => {
   useEffect(() => {
-    console.log('useEffect')
-
-    props.getAlerts()
+    props.fetchAlerts()
   }, [])
 
   return (
     <div>
-      <h1>Home</h1>
-      <p>Count: {props.count}</p>
-      <p>Alerts: {JSON.stringify(props.alertList)} </p>
-
-      <p>
-        <button onClick={props.increment}>Increment</button>
-        <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
-          Increment Async
-        </button>
-      </p>
-
-      <p>
-        <button onClick={props.decrement}>Decrement</button>
-        <button onClick={props.decrementAsync} disabled={props.isDecrementing}>
-          Decrement Async
-        </button>
-      </p>
-
-      <p>
-        <button onClick={() => props.changePage()}>
-          Go to about page via redux
-        </button>
-      </p>
+      <h1>Alerts</h1>
+      <p>Alerts: {JSON.stringify(props.alerts)} </p>
     </div>
   )
 }
 
-const mapStateToProps = ({ counter, alert }) => ({
-  count: counter.count,
-  isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing,
-  alertList: alert,
+const mapStateToProps = (state) => ({
+  error: getAlertsError(state),
+  alerts: getAlerts(state),
+  pending: getAlertsPending(state),
 })
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      increment,
-      incrementAsync,
-      decrement,
-      decrementAsync,
-      changePage: () => push('/agents'),
-      getAlerts,
+      fetchAlerts,
     },
     dispatch
   )

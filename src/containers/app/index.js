@@ -1,6 +1,6 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
-import Home from '../alert'
+import { Route } from 'react-router-dom'
+import Alert from '../alert'
 import Agent from '../agent'
 import NavBar from '../navBar'
 import Rule from '../rule'
@@ -13,7 +13,7 @@ const App = () => (
     </header>
 
     <main>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Alert} />
       <Route exact path="/agents" component={Agent} />
       <Route exact path="/rules" component={Rule} />
       <Route exact path="/dashboard" component={Dashboard} />

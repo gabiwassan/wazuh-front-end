@@ -1,36 +1,23 @@
-import { ALERTS_LISTED, ALERTS_REQUEST } from './types'
-import alertService from '../../services/alert.service'
+import { ALERTS_ERROR, ALERTS_REQUEST, ALERTS_SUCCESS } from './types'
 
-const initialState = {
-  data: [],
-}
-
-export default (state = initialState, action) => {
-  debugger
-  switch (action.type) {
-    case ALERTS_REQUEST:
-      return {
-        ...state,
-        data: state,
-      }
-
-    default:
-      return state
+export const fetchAlertsPending = () => {
+  return {
+    type: ALERTS_REQUEST,
   }
 }
 
-export const getAlerts = () => {
-  debugger
-  return async (dispatch) => {
-    const response = await alertService.getAlerts()
-
-    dispatch({
-      type: ALERTS_REQUEST,
-    })
-
-    dispatch({
-      type: ALERTS_LISTED,
-      payload: { response },
-    })
+export const fetchAlertsSuccess = (alerts) => {
+  return {
+    type: ALERTS_SUCCESS,
+    alerts: alerts,
   }
 }
+
+export const fetchAlertsError = (error) => {
+  return {
+    type: ALERTS_ERROR,
+    error: error,
+  }
+}
+
+export default { fetchAlertsPending, fetchAlertsSuccess, fetchAlertsError }

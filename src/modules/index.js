@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
-import alert from './alerts/actions'
+import alert from './alerts/reducer'
 
 export default combineReducers({
-  counter,
   alert,
 })
