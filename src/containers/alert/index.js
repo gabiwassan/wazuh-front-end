@@ -7,6 +7,8 @@ import {
   getAlertsError,
   getAlertsPending,
 } from '../../modules/alerts/reducer'
+import Index from '../../components/alertTable'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const Alert = (props) => {
   useEffect(() => {
@@ -16,7 +18,12 @@ const Alert = (props) => {
   return (
     <div>
       <h1>Alerts</h1>
-      <p>Alerts: {JSON.stringify(props.alerts)} </p>
+      {/*<p>Alerts: {JSON.stringify(props.alerts)} </p>*/}
+      {props.alerts.length > 0 ? (
+        <Index alerts={props.alerts} />
+      ) : (
+        <CircularProgress disableShrink />
+      )}
     </div>
   )
 }

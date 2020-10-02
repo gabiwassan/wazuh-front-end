@@ -5,7 +5,6 @@ import {
 } from './actions'
 
 function fetchAlerts() {
-  debugger
   return (dispatch) => {
     dispatch(fetchAlertsPending())
     fetch(`${process.env.REACT_APP_API_HOST}/alert`)
