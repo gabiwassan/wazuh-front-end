@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -111,29 +111,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Index(props) {
+export default function AlertTable(props) {
   const { alerts } = props
   const classes = useStyles()
-  const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('calories')
-  const [selected, setSelected] = React.useState([])
-  const [page, setPage] = React.useState(0)
-  const [dense, setDense] = React.useState(false)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('calories')
+  const [selected, setSelected] = useState([])
+  const [page, setPage] = useState(0)
+  const [dense, setDense] = useState(false)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)
-  }
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = alerts.map((n) => n.name)
-      setSelected(newSelecteds)
-      return
-    }
-    setSelected([])
   }
 
   const handleClick = (event, name) => {
@@ -169,8 +160,6 @@ export default function Index(props) {
     setDense(event.target.checked)
   }
 
-  const isSelected = (name) => selected.indexOf(name) !== -1
-
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, alerts.length - page * rowsPerPage)
 
@@ -185,7 +174,6 @@ export default function Index(props) {
             aria-label="enhanced table">
             <AlertsTableHead
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
@@ -195,18 +183,14 @@ export default function Index(props) {
               {stableSort(alerts, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row._id)
-                  const labelId = `enhanced-table-checkbox-${index}`
 
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row._id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row._id}
-                      selected={isItemSelected}>
+                      selected={false}>
                       <TableCell align="left">{row._id}</TableCell>
                       <TableCell align="left">{row._type}</TableCell>
                       <TableCell align="left">{row._score}</TableCell>
