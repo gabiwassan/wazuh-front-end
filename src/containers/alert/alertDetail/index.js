@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
-  getAgentById,
-  getAgentByIdError,
-  getAgentByIdPending,
-} from '../../modules/agents/reducer'
+  getAlertById,
+  getAlertByIdError,
+  getAlertByIdPending,
+} from '../../../modules/alerts/reducer'
 import { bindActionCreators } from 'redux'
-import { fetchAgentById } from '../../modules/agents/fetchAgents'
+import { fetchAlertById } from '../../../modules/alerts/fetchAlerts'
 import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -33,39 +33,50 @@ const useStyles = makeStyles({
   },
 })
 
-const AgentDetail = (props) => {
+const AlertDetail = (props) => {
   const history = useHistory()
-  const agentId = history.location.pathname.split('/').pop()
+  const alertId = history.location.pathname.split('/').pop()
   const classes = useStyles()
-  const { agent } = props
+  const { alert } = props
 
   useEffect(() => {
-    props.fetchAgentById(agentId)
+    props.fetchAlertById(alertId)
   }, [])
 
   return (
     <div>
-      {agent ? (
+      {alert ? (
         <Card className={classes.root} variant="outlined">
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
-              Details of Agent {agentId}
+              Details of Alert {alertId}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Id: {agent.id}
+              Index: {alert._index}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Name: {agent.name}
+              Score: {alert._score}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Ip: {agent.ip}
+              Type: {alert._type}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Total alerts: {agent.total_alerts}
+              Agent name: {alert._source.agent.name} - Id:{' '}
+              {alert._source.agent.id}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              Cluster: {alert._source.cluster.name}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              Manager: {alert._source.manager.name}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              Rule: {alert._source.rule.description} - Id:{' '}
+              {alert._source.rule.id}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="secondary" href="/agents">
+            <Button variant="contained" color="secondary" href="/">
               Back
             </Button>
           </CardActions>
@@ -78,17 +89,17 @@ const AgentDetail = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  error: getAgentByIdError(state),
-  pending: getAgentByIdPending(state),
-  agent: getAgentById(state),
+  error: getAlertByIdError(state),
+  pending: getAlertByIdPending(state),
+  alert: getAlertById(state),
 })
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      fetchAgentById,
+      fetchAlertById,
     },
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgentDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(AlertDetail)

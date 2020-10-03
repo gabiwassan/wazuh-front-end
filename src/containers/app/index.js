@@ -2,11 +2,11 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import Alert from '../alert'
 import Agent from '../agent'
-import AlertDetail from '../alertDetail'
+import AlertDetail from '../alert/alertDetail'
 import NavBar from '../navBar'
 import Rule from '../rule'
 import Dashboard from '../dashboard'
-import AgentDetail from '../agentDetail'
+import AgentDetail from '../agent/agentDetail'
 
 const App = () => (
   <div>
