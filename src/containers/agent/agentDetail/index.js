@@ -49,7 +49,7 @@ const AgentDetail = (props) => {
         <Card className={classes.root} variant="outlined">
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
-              Details of Agent {agentId}
+              Details of Agent {agent.name}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
               Id: {agent.id}
@@ -71,7 +71,9 @@ const AgentDetail = (props) => {
           </CardActions>
         </Card>
       ) : (
-        <CircularProgress disableShrink />
+        <div className='loader'>
+          <CircularProgress disableShrink />
+        </div>
       )}
     </div>
   )

@@ -21,7 +21,9 @@ const Agent = (props) => {
       {props.agents.length > 0 ? (
         <AgentTable agents={props.agents} />
       ) : (
-        <CircularProgress disableShrink />
+        <div className='loader'>
+          <CircularProgress disableShrink />
+        </div>
       )}
     </div>
   )

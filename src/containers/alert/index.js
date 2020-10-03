@@ -21,7 +21,9 @@ const Alert = (props) => {
       {props.alerts.length > 0 ? (
         <AlertTable alerts={props.alerts} />
       ) : (
-        <CircularProgress disableShrink />
+        <div className='loader'>
+          <CircularProgress disableShrink />
+        </div>
       )}
     </div>
   )

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
-  getAlertById,
-  getAlertByIdError,
-  getAlertByIdPending,
-} from '../../../modules/alerts/reducer'
+  getRuleById,
+  getRuleByIdError,
+  getRuleByIdPending,
+} from '../../../modules/rules/reducer'
 import { bindActionCreators } from 'redux'
-import { fetchAlertById } from '../../../modules/alerts/fetchAlerts'
+import { fetchRuleById } from '../../../modules/rules/fetchRules'
 import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -33,50 +33,57 @@ const useStyles = makeStyles({
   },
 })
 
-const AlertDetail = (props) => {
+const RuleDetail = (props) => {
   const history = useHistory()
-  const alertId = history.location.pathname.split('/').pop()
+  const ruleId = history.location.pathname.split('/').pop()
   const classes = useStyles()
-  const { alert } = props
+  const { rule } = props
 
   useEffect(() => {
-    props.fetchAlertById(alertId)
+    props.fetchRuleById(ruleId)
   }, [])
 
   return (
     <div>
-      {alert ? (
+      {rule ? (
         <Card className={classes.root} variant="outlined">
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
-              Details of Alert {alertId}
+              Details of Rule {rule.description}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Index: {alert._index}
+              Id: {rule.id}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Score: {alert._score}
+              Description: {rule.description}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Type: {alert._type}
+              Fired times: {rule.firedtimes}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Agent name: {alert._source.agent.name} - Id:{' '}
-              {alert._source.agent.id}
+              GDPR: {rule.gdpr}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Cluster: {alert._source.cluster.name}
+              GPG13: {rule.gpg13}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Manager: {alert._source.manager.name}
+              Level: {rule.level}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-              Rule: {alert._source.rule.description} - Id:{' '}
-              {alert._source.rule.id}
+              Mail: {rule.mail ? rule.mail : 'Empty'}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              NIST 800 53: {rule.nist_800_53}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              PCI DSS: {rule.pci_dss}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              Total alerts: {rule.total_alerts}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="secondary" href="/">
+            <Button variant="contained" color="secondary" href="/rules">
               Back
             </Button>
           </CardActions>
@@ -91,17 +98,17 @@ const AlertDetail = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  error: getAlertByIdError(state),
-  pending: getAlertByIdPending(state),
-  alert: getAlertById(state),
+  error: getRuleByIdError(state),
+  pending: getRuleByIdPending(state),
+  rule: getRuleById(state),
 })
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      fetchAlertById,
+      fetchRuleById,
     },
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlertDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(RuleDetail)
