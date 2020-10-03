@@ -44,7 +44,7 @@ const AgentDetail = (props) => {
   }, [])
 
   return (
-    <div>
+    <div className="padding-content">
       {agent ? (
         <Card className={classes.root} variant="outlined">
           <CardContent>
@@ -71,7 +71,7 @@ const AgentDetail = (props) => {
           </CardActions>
         </Card>
       ) : (
-        <div className='loader'>
+        <div className="loader">
           <CircularProgress disableShrink />
         </div>
       )}

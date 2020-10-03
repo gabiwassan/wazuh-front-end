@@ -44,7 +44,7 @@ const AlertDetail = (props) => {
   }, [])
 
   return (
-    <div>
+    <div className="padding-content">
       {alert ? (
         <Card className={classes.root} variant="outlined">
           <CardContent>
@@ -82,7 +82,7 @@ const AlertDetail = (props) => {
           </CardActions>
         </Card>
       ) : (
-        <div className='loader'>
+        <div className="loader">
           <CircularProgress disableShrink />
         </div>
       )}

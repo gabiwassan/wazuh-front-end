@@ -16,12 +16,12 @@ const Agent = (props) => {
   }, [])
 
   return (
-    <div>
+    <div className="padding-content">
       <h1>Agents</h1>
       {props.agents.length > 0 ? (
         <AgentTable agents={props.agents} />
       ) : (
-        <div className='loader'>
+        <div className="loader">
           <CircularProgress disableShrink />
         </div>
       )}

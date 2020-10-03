@@ -22,19 +22,27 @@ const NavBar = () => {
   }
 
   return (
-    <Paper className={classes.root}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        centered>
-        <Tab label="Alerts" onClick={() => handleOnClick('/')} />
-        <Tab label="Agents" onClick={() => handleOnClick('/agents')} />
-        <Tab label="Rules" onClick={() => handleOnClick('/rules')} />
-        <Tab label="Dashboard" onClick={() => handleOnClick('/dashboard')} />
-      </Tabs>
-    </Paper>
+    <>
+      <a href="https://wazuh.com">
+        <img
+          className="logo"
+          src="https://wazuh.com/wp-content/themes/wazuh/assets/images/wazuh_logo.svg"
+        />
+      </a>
+      <Paper className={classes.root}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered>
+          <Tab label="Alerts" onClick={() => handleOnClick('/')} />
+          <Tab label="Agents" onClick={() => handleOnClick('/agents')} />
+          <Tab label="Rules" onClick={() => handleOnClick('/rules')} />
+          <Tab label="Dashboard" onClick={() => handleOnClick('/dashboard')} />
+        </Tabs>
+      </Paper>
+    </>
   )
 }
 

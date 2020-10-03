@@ -44,7 +44,7 @@ const RuleDetail = (props) => {
   }, [])
 
   return (
-    <div>
+    <div className="padding-content">
       {rule ? (
         <Card className={classes.root} variant="outlined">
           <CardContent>
@@ -89,7 +89,7 @@ const RuleDetail = (props) => {
           </CardActions>
         </Card>
       ) : (
-        <div className='loader'>
+        <div className="loader">
           <CircularProgress disableShrink />
         </div>
       )}

@@ -16,12 +16,12 @@ const Alert = (props) => {
   }, [])
 
   return (
-    <div>
+    <div className="padding-content">
       <h1>Alerts</h1>
       {props.alerts.length > 0 ? (
         <AlertTable alerts={props.alerts} />
       ) : (
-        <div className='loader'>
+        <div className="loader">
           <CircularProgress disableShrink />
         </div>
       )}
