@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import fetchAgents from '../../modules/agents/fetchAgents'
+import {
+  getAgents,
+  getAgentsError,
+  getAgentsPending,
+} from '../../modules/agents/reducer'
+import AgentTable from '../../components/agentTable'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-const Agent = () => (
-  <div>
-    <h1>Agents view</h1>
-  </div>
-)
+const Agent = (props) => {
+  useEffect(() => {
+    props.fetchAgents()
+  }, [])
 
-export default Agent
+  return (
+    <div>
+      <h1>Agents</h1>
+      {props.agents.length > 0 ? (
+        <AgentTable agents={props.agents} />
+      ) : (
+        <CircularProgress disableShrink />
+      )}
+    </div>
+  )
+}
+
+const mapStateToProps = (state) => ({
+  agents: getAgents(state),
+  pending: getAgentsPending(state),
+  error: getAgentsError(state),
+})
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      fetchAgents,
+    },
+    dispatch
+  )
+
+export default connect(mapStateToProps, mapDispatchToProps)(Agent)

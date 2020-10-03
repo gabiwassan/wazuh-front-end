@@ -6,6 +6,7 @@ import AlertDetail from '../alertDetail'
 import NavBar from '../navBar'
 import Rule from '../rule'
 import Dashboard from '../dashboard'
+import AgentDetail from '../agentDetail'
 
 const App = () => (
   <div>
@@ -17,6 +18,7 @@ const App = () => (
       <Route exact path="/" component={Alert} />
       <Route exact path="/alert/:id" component={AlertDetail} />
       <Route exact path="/agents" component={Agent} />
+      <Route exact path="/agent/:id" component={AgentDetail} />
       <Route exact path="/rules" component={Rule} />
       <Route exact path="/dashboard" component={Dashboard} />
     </main>

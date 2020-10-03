@@ -41,13 +41,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: '_id', numeric: true, disablePadding: false, label: 'ID' },
-  { id: '_type', numeric: true, disablePadding: false, label: 'Type' },
-  { id: '_index', numeric: false, disablePadding: true, label: 'Index' },
-  { id: '_score', numeric: true, disablePadding: false, label: 'Score' },
+  { id: 'id', numeric: true, disablePadding: false, label: 'ID' },
+  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
+  { id: 'ip', numeric: false, disablePadding: true, label: 'IP' },
 ]
 
-function AlertsTableHead(props) {
+function AgentsTableHead(props) {
   const { classes, order, orderBy, onRequestSort } = props
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
@@ -80,7 +79,7 @@ function AlertsTableHead(props) {
   )
 }
 
-AlertsTableHead.propTypes = {
+AgentsTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
@@ -113,10 +112,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function AlertTable(props) {
-  const { alerts } = props
+  const { agents } = props
   const classes = useStyles()
   const [order, setOrder] = useState('asc')
-  const [orderBy, setOrderBy] = useState('_id')
+  const [orderBy, setOrderBy] = useState('id')
   const [page, setPage] = useState(0)
   const [dense, setDense] = useState(false)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -143,7 +142,7 @@ export default function AlertTable(props) {
   }
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, alerts.length - page * rowsPerPage)
+    rowsPerPage - Math.min(rowsPerPage, agents.length - page * rowsPerPage)
 
   return (
     <div className={classes.root}>
@@ -154,28 +153,27 @@ export default function AlertTable(props) {
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             aria-label="enhanced table">
-            <AlertsTableHead
+            <AgentsTableHead
               classes={classes}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={alerts.length}
+              rowCount={agents.length}
             />
             <TableBody>
-              {stableSort(alerts, getComparator(order, orderBy))
+              {stableSort(agents, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   return (
                     <TableRow
                       hover
-                      onClick={() => handleOnClick(`/alert/${row._id}`)}
+                      onClick={() => handleOnClick(`/agent/${row.id}`)}
                       tabIndex={-1}
-                      key={row._id}
+                      key={row.id}
                       selected={false}>
-                      <TableCell align="left">{row._id}</TableCell>
-                      <TableCell align="left">{row._type}</TableCell>
-                      <TableCell align="left">{row._score}</TableCell>
-                      <TableCell align="left">{row._index}</TableCell>
+                      <TableCell align="left">{row.id}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.ip}</TableCell>
                     </TableRow>
                   )
                 })}
@@ -190,7 +188,7 @@ export default function AlertTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={alerts.length}
+          count={agents.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
