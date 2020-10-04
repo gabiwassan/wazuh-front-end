@@ -19,9 +19,26 @@ const Dashboard = (props) => {
   const totalAlerts = props.agents.map((agent) => {
     return { values: [agent.total_alerts], text: agent.name }
   })
-  debugger
   const myConfig = {
-    legend: {},
+    title: {
+      text: "Total Alerts by Agent",
+    },
+    legend: {
+      'draggable': true,
+      'drag-handler': "icon",
+      'icon': {
+        'line-color': "red"
+      },
+      header: {
+        'background-color': "#ffe6e6",
+        'border-left': "1px solid red",
+        'border-right': "1px solid red",
+        'border-top': "1px solid red",
+        'border-bottom': "1px solid red"
+      },
+      x: "10%",
+      y: "10%"
+    },
     type: 'bar3d',
     series: totalAlerts,
   }
@@ -29,8 +46,7 @@ const Dashboard = (props) => {
   return (
     <>
       {!props.pending ? (
-        <div className="padding-content">
-          <h2>Total alert by Agent</h2>
+        <div className="padding-dashboard">
           <ZingChart data={myConfig} />
         </div>
       ) : (
