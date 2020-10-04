@@ -18,7 +18,7 @@ const Rule = (props) => {
   return (
     <div className="padding-content">
       <h1>Rules</h1>
-      {props.rules.length > 0 ? (
+      {!props.pending ? (
         <RuleTable rules={props.rules} />
       ) : (
         <div className="loader">

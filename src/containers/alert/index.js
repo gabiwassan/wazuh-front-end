@@ -18,7 +18,7 @@ const Alert = (props) => {
   return (
     <div className="padding-content">
       <h1>Alerts</h1>
-      {props.alerts.length > 0 ? (
+      {!props.pending ? (
         <AlertTable alerts={props.alerts} />
       ) : (
         <div className="loader">

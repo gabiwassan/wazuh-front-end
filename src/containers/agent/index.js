@@ -18,7 +18,7 @@ const Agent = (props) => {
   return (
     <div className="padding-content">
       <h1>Agents</h1>
-      {props.agents.length > 0 ? (
+      {!props.pending ? (
         <AgentTable agents={props.agents} />
       ) : (
         <div className="loader">
