@@ -1,4 +1,4 @@
-This this project is a challenge for [Wazuh](https://wazuh.com/).
+This project is a challenge for [Wazuh](https://wazuh.com/).
 
 
 ## Available Scripts
